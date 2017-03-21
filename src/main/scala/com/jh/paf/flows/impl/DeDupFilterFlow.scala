@@ -32,15 +32,15 @@ class DeDupDecryptedMessage extends DeDupFilter[DecryptedMessage] {
 
 object DeDupFilterFlow {
 
-  def apply[B](deduplicator: DeDupFilter[B]): Flow[Message[B], Message[B], NotUsed] =
+  def apply[B](deduplicator: DeDupFilter[B], numberOfElements: Int, duration: FiniteDuration): Flow[Message[B], Message[B], NotUsed] =
     Flow[Message[B]]
-      .groupedWithin(100, 1 seconds)
+      .groupedWithin(numberOfElements, duration)
       .map {
         deduplicator.removeDuplicates
       }
       .mapConcat {
         identity
       }
-      .buffer(10 * 100, OverflowStrategy.backpressure)
+      .buffer(10 * numberOfElements, OverflowStrategy.backpressure)
 
 }

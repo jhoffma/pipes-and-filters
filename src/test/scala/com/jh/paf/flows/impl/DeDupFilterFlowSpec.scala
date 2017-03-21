@@ -13,7 +13,7 @@ class DeDupFilterFlowSpec extends BaseAkkaFlowSpec {
 
   it should "remove duplicated messages" in {
     //given
-    val flowUnderTest = DeDupFilterFlow(new DeDupDecryptedMessage)
+    val flowUnderTest = DeDupFilterFlow(new DeDupDecryptedMessage, 10 , 2 seconds)
     val firstMsg = new DecryptedMessage("duplicated", "aaa")
     val secondMsg = new DecryptedMessage("duplicated", "aaa")
     val thirdMsg = new DecryptedMessage("other message", "bbb")
