@@ -21,7 +21,7 @@ object AuthenticateFilterFlow {
 
   def apply[B](authenticator: AuthenticateFilter[B]) (implicit ec : ExecutionContext) : Flow[Message[B], Message[B], NotUsed] =
     Flow[Message[B]]
-    .mapAsync(10)(msg =>
+    .mapAsync(10)( msg =>
       //Assume that 'authenticate' is a long lasting operation based on call to external service or DB
       Future((authenticator.authenticate(msg), msg))
     )
