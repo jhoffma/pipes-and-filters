@@ -8,5 +8,6 @@ abstract class BaseAkkaFlowSpec extends FlatSpec with Matchers {
 
   implicit val actorSystem = ActorSystem()
   implicit val materializer = ActorMaterializer()
+  implicit val ec = actorSystem.dispatcher
 
 }
