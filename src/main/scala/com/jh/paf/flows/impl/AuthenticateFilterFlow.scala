@@ -5,10 +5,14 @@ import akka.stream.scaladsl.Flow
 import com.jh.paf.flows.AuthenticateFilter
 import com.jh.paf.model.{DecryptedMessage, Message}
 
+import scala.collection.immutable
+
 class AuthenticateDecryptedMessageFilter extends AuthenticateFilter[DecryptedMessage] {
+
+  val validTokens = immutable.Seq("aaa", "bbb", "ccc")
+
   override def authenticate(msg: Message[DecryptedMessage]): Boolean = {
-      msg.content.getAuthToken()
-      true
+    validTokens.contains(msg.content.getAuthToken)
   }
 }
 
